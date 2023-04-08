@@ -84,8 +84,9 @@ public class HomeController {
     public void loadHomeScene() {
         URL url = getClass().getResource("Property.fxml");
         PropertyController controller = (PropertyController) loadScene(url);
-        controller.setupCountryComboBox();
-        System.out.println("The controller is " + controller);
+        if (controller != null) {
+            controller.setupCountryComboBox();
+        }
     }
 
     @FXML
@@ -144,44 +145,6 @@ public class HomeController {
             leaseImageView.setImage(leaseImage);
         } catch (Exception exception) {
             System.out.println("Exception: " + exception.getMessage());
-        }
-    }
-
-    public static class PropertyController {
-        @FXML
-        TextField streetNumberTextField;
-
-        @FXML
-        TextField streetNameTextField;
-
-        @FXML
-        TextField cityTextField;
-
-        @FXML
-        TextField postalCodeField;
-
-        @FXML
-        ComboBox<String> countryComboBox;
-
-        public void setupCountryComboBox() {
-            countryComboBox.getItems().addAll("United States",
-                    "Canada",
-                    "Mexico",
-                    "Brazil",
-                    "Argentina",
-                    "United Kingdom",
-                    "France",
-                    "Germany",
-                    "Spain",
-                    "Italy",
-                    "China",
-                    "Japan",
-                    "South Korea",
-                    "India",
-                    "Australia"
-            );
-            countryComboBox.setValue("Canada");
-
         }
     }
 }
