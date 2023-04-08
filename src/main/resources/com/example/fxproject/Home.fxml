@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="567.0" prefWidth="783.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fxproject.HomeController">
+   <children>
+      <VBox prefHeight="567.0" prefWidth="201.0" style="-fx-background-color: #00ADB5;">
+         <children>
+            <Line endX="100.0" startX="-100.0" />
+            <HBox id="0" fx:id="homeMenuBox" onMouseClicked="#homeSceneSelection" prefHeight="51.0" prefWidth="162.0" style="-fx-background-color: #393E46;">
+               <children>
+                  <ImageView fx:id="homeImageView" fitHeight="53.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label prefHeight="52.0" prefWidth="104.0" text="HOME" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Label>
+               </children>
+            </HBox>
+            <HBox fx:id="tenantMenuBox" onMouseClicked="#tenantSceneSelection" prefHeight="51.0" prefWidth="162.0" style="-fx-background-color: #00ADB5;">
+               <children>
+                  <ImageView fx:id="tenantsImageView" fitHeight="53.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label prefHeight="52.0" prefWidth="120.0" text="Tenants" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Label>
+               </children>
+            </HBox>
+            <HBox fx:id="notificationMenuBox" onMouseClicked="#notificationSceneSelection" prefHeight="51.0" prefWidth="162.0" style="-fx-background-color: #00ADB5;">
+               <children>
+                  <ImageView fx:id="notificationImageView" fitHeight="53.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label prefHeight="52.0" prefWidth="120.0" text="Notifications" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fx:id="leaseMenuBox" onMouseClicked="#leaseSceneSelection" prefHeight="51.0" prefWidth="162.0" style="-fx-background-color: #00ADB5;">
+               <children>
+                  <ImageView fx:id="leaseImageView" fitHeight="53.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label prefHeight="52.0" prefWidth="120.0" text="Lease" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <AnchorPane fx:id="viewerPane" layoutX="201.0" prefHeight="567.0" prefWidth="582.0" />
+   </children>
+</AnchorPane>
