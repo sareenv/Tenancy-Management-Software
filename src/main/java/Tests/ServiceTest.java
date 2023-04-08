@@ -1,6 +1,7 @@
 package Tests;
 
 import DataAccess.Service;
+import Tests.Objects.MockObject;
 import org.junit.*;
 
 import java.io.File;

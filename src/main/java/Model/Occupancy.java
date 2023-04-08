@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public abstract class Occupancy implements Serializable {
-    private final UUID id = UUID.randomUUID();
+    public final UUID id = UUID.randomUUID();
     public UUID getId() { return id; }
     boolean isOccupancyAvailable = true;
     public abstract Address getOccupancyAddress();

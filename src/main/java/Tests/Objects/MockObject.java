@@ -1,7 +1,6 @@
-package Tests;
+package Tests.Objects;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 

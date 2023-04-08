@@ -7,4 +7,5 @@ module com.example.fxproject {
     opens Tests to junit;
 
     exports com.example.fxproject;
+    opens Tests.Objects to junit;
 }

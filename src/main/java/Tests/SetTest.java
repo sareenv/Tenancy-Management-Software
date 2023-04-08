@@ -8,7 +8,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 public class SetTest {
-
     private IdentityObject object;
     private Set<IdentityObject> set;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();

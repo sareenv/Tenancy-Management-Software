@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Address implements Serializable {
-    String streetNumber;
-    String streetName;
-    String postalCode;
-    String city;
-    String country;
+    public String streetNumber;
+    public String streetName;
+    public String postalCode;
+    public String city;
+    public String country;
 
     public Address(String streetNumber, String streetName,
                    String postalCode,
