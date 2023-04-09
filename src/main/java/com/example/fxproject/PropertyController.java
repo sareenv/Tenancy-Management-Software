@@ -80,7 +80,9 @@ public class PropertyController {
 
         if (propertyType.equals("house")) {
             creator = new OccupancyCreator.Builder(address).build();
-        } else if(propertyType.equals("condo")) {
+            return creator.createRentalUnit();
+        } else if(propertyType.equals("apartment")) {
+            // Creating a condo type.
             try {
                 int bedroom = Integer.parseInt(bedRoomCountTextField.getText());
                 int bathroom = Integer.parseInt(bathRoomCountTextField.getText());
@@ -90,21 +92,32 @@ public class PropertyController {
                         bathroom ,
                         squareFoot,
                         address, apartmentNumber).build();
+                return creator.createRentalUnit();
             } catch (Exception e) {
                 // TODO: - Throw the error message.
+                showAlert("Invalid Type Error", e.getMessage());
+                return null;
             }
         } else {
-            int bedroom = Integer.parseInt(bedRoomCountTextField.getText());
-            int bathroom = Integer.parseInt(bathRoomCountTextField.getText());
-            double squareFoot = Double.parseDouble(squareFootTextField.getText());
-            int unitNumber = Integer.parseInt(unitNumberTextField.getText());
-            creator = new OccupancyCreator.Builder(unitNumber,
-                    bathroom,
-                    bedroom,
-                    squareFoot,
-                    address).build();
+            // Creating an apartment type.
+            try {
+                int bedroom = Integer.parseInt(bedRoomCountTextField.getText());
+                int bathroom = Integer.parseInt(bathRoomCountTextField.getText());
+                double squareFoot = Double.parseDouble(squareFootTextField.getText());
+                int unitNumber = Integer.parseInt(unitNumberTextField.getText());
+                System.out.println(unitNumberTextField.getText());
+                creator = new OccupancyCreator.Builder(unitNumber,
+                        bathroom,
+                        bedroom,
+                        squareFoot,
+                        address).build();
+                return creator.createRentalUnit();
+            }catch (Exception e) {
+                showAlert("Invalid Type Error", e.getMessage());
+                return null;
+            }
         }
-        return creator.createRentalUnit();
+
     }
 
     // Utility method to generate the alert message.
@@ -183,13 +196,18 @@ public class PropertyController {
         Occupancy occupancy = creator.createRentalUnit();
 
         ObservableList<Occupancy> data = FXCollections.observableArrayList(occupancyList);
-        occupancyTableView.setItems(data);
-        occupancyIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId().toString()));
-        addressCityColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.
-                getValue().getOccupancyAddress().city));
-        addressCountryColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOccupancyAddress().country));
-        addressStreetNumberColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOccupancyAddress().streetNumber));
-        addressStreetNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOccupancyAddress().streetName));
+        try {
+            occupancyTableView.setItems(data);
+            occupancyIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId().toString()));
+            addressCityColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.
+                    getValue().getOccupancyAddress().city));
+            addressCountryColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOccupancyAddress().country));
+            addressStreetNumberColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOccupancyAddress().streetNumber));
+            addressStreetNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOccupancyAddress().streetName));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void setupCountryComboBox() {
@@ -246,7 +264,4 @@ public class PropertyController {
         }
         return result;
     }
-
-
-
 }

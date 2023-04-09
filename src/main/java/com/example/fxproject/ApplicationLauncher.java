@@ -19,27 +19,11 @@ public class ApplicationLauncher extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
         Parent homeWindow = loader.load();
-        Thread controllerThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HomeController controller = loader.getController();
-                synchronized (ApplicationLauncher.this) {
-                    // notify when the controller is ready
-                    ApplicationLauncher.this.notify();
-                }
 
-                controller.loadImageView();
-                controller.loadHomeScene();
-            }
-        });
 
-        controllerThread.setDaemon(true);
-
-        synchronized (this) {
-            // Wait for the controller to be ready before starting it
-            this.wait();
-        }
-        controllerThread.start();
+        HomeController controller = loader.getController();
+        controller.loadImageView();
+        controller.loadHomeScene();
 
         Scene homeScene = new Scene(homeWindow);
         stage.setScene(homeScene);
@@ -55,7 +39,8 @@ public class ApplicationLauncher extends Application {
                 Application.launch(ApplicationLauncher.class);
             }
         });
-        runnerThread.setDaemon(true);
+//        runnerThread.setDaemon(true);
+        runnerThread.setPriority(Thread.MAX_PRIORITY);
         runnerThread.start();
     }
 }
