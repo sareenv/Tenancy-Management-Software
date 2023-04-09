@@ -220,8 +220,33 @@ public class PropertyController {
             administrator.addUnit(occupancy);
             return true;
         } catch (Exception e) {
-            System.out.println("Exception occurred: " + e.getMessage());
             return false;
         }
     }
+
+    // TODO: - Need to integrate this.
+    public ArrayList<Occupancy> displayRentedProperties() {
+        return Occupancy.findOccupanciesWithStatus(Constants.OccupancyPath, false);
+    }
+
+    // Utility method to display all the properties.
+    public ArrayList<Occupancy> displayAllProperties() {
+        return Occupancy.findOccupanciesWithStatus(Constants.OccupancyPath, null);
+    }
+
+    // TODO: - Need to integrate this.
+    public ArrayList<Occupancy> displayVacantProperties() {
+        ArrayList<Occupancy> rented = this.displayRentedProperties();
+        ArrayList<Occupancy> allOccupancies = this.displayAllProperties();
+        ArrayList<Occupancy> result = new ArrayList<>();
+        for (Occupancy o: allOccupancies) {
+            if (!rented.contains(o)) {
+                result.add(o);
+            }
+        }
+        return result;
+    }
+
+
+
 }

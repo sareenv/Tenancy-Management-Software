@@ -1,5 +1,6 @@
 
 package com.example.fxproject;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.LoadException;
@@ -43,7 +44,18 @@ public class HomeController {
     @FXML
     AnchorPane viewerPane;
 
+    public void initialize() {
+        signalNotify();
+    }
+
+    private void signalNotify() {
+        synchronized (this) {
+            this.notifyAll();
+        }
+    }
+
     private void resetSelectedColors(HBox selectedOptions) {
+
         ArrayList<HBox> menuOptions = new ArrayList<>();
         menuOptions.add(homeMenuBox);
         menuOptions.add(tenantMenuBox);
@@ -91,29 +103,40 @@ public class HomeController {
 
     @FXML
     public void homeSceneSelection() {
-        loadHomeScene();
-        resetSelectedColors(homeMenuBox);
+        // Platform.runLater to be running on the UI/Application thread.
+        Platform.runLater(() -> {
+            loadHomeScene();
+            resetSelectedColors(homeMenuBox);
+        });
     }
 
     @FXML
     public void tenantSceneSelection() {
-        URL url = getClass().getResource("Tenants.fxml");
-        loadScene(url);
-        resetSelectedColors(tenantMenuBox);
+        // Platform.runLater to be running on the UI/Application thread.
+        Platform.runLater(() -> {
+            URL url = getClass().getResource("Tenants.fxml");
+            loadScene(url);
+            resetSelectedColors(tenantMenuBox);
+        });
     }
 
     @FXML
     public void notificationSceneSelection() {
-        URL url = getClass().getResource("Notifications.fxml");
-        loadScene(url);
-        resetSelectedColors(notificationMenuBox);
+        // Platform.runLater to be running on the UI/Application thread.
+        Platform.runLater(() -> {
+            URL url = getClass().getResource("Notifications.fxml");
+            loadScene(url);
+            resetSelectedColors(notificationMenuBox);
+        });
     }
 
     @FXML
     public void leaseSceneSelection() {
-        URL url = getClass().getResource("Lease.fxml");
-        loadScene(url);
-        resetSelectedColors(leaseMenuBox);
+        Platform.runLater(() -> {
+            URL url = getClass().getResource("Lease.fxml");
+            loadScene(url);
+            resetSelectedColors(leaseMenuBox);
+        });
     }
 
     public void loadImageView() {
@@ -139,10 +162,12 @@ public class HomeController {
             Image leaseImage = new Image(leaseStream);
 
             // needs to be changed
-            homeImageView.setImage(homeImage);
-            tenantsImageView.setImage(tenantsImage);
-            notificationImageView.setImage(notificationImage);
-            leaseImageView.setImage(leaseImage);
+            Platform.runLater(() -> {
+                homeImageView.setImage(homeImage);
+                tenantsImageView.setImage(tenantsImage);
+                notificationImageView.setImage(notificationImage);
+                leaseImageView.setImage(leaseImage);
+            });
         } catch (Exception exception) {
             System.out.println("Exception: " + exception.getMessage());
         }
