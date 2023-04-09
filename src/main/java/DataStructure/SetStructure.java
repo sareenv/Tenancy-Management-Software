@@ -11,12 +11,12 @@ public class SetStructure implements  IdentifiableObject{
     }
 
     @Override
-    public String toString(){
-        return "IdentityObject{" +
-                "objectID=" + objectId + " value="+element +
+    public String toString() {
+        return "SetStructure{" +
+                "objectId=" + objectId +
+                ", element='" + element + '\'' +
                 '}';
     }
-
 
     @Override
     public Integer getObjectID() {

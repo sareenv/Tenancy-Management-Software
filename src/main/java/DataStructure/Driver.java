@@ -77,9 +77,8 @@ public class Driver {
             System.out.println("Press 2, To remove an element");
             System.out.println("Press 3, To get an element");
             System.out.println("Press 4, To get size of set");
-            System.out.println("Press 5, To compare 2 set");
-            System.out.println("Press 6, To display all elements in set");
-            System.out.println("Press 7, To exit !");
+            System.out.println("Press 5, To display all elements in set");
+            System.out.println("Press 6, To exit !");
             System.out.println("*****************************************");
 
             System.out.print("Enter your choice here: ");
@@ -100,10 +99,5 @@ public class Driver {
                 displayAllElements();
             }
         }while(choice < 7);
-
-
-
-
-
     }
 }

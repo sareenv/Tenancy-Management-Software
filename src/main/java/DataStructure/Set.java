@@ -39,6 +39,10 @@ public class Set<T extends IdentifiableObject> {
     public Integer size() { return lst.size(); }
 
     public void displayElements() {
+        if (lst.isEmpty()) {
+            System.out.println("No elements are found");
+            return;
+        }
         for (T object: lst) {
             System.out.println(object);
         }
