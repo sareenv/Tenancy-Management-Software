@@ -4,17 +4,15 @@ import Builder.OccupancyCreator;
 import Interface.Constants;
 import Model.Address;
 import Model.Administrator;
-import Model.House;
 import Model.Occupancy;
-import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +28,20 @@ public class PropertyController {
     @FXML TextField squareFootTextField;
     @FXML TextField apartmentNumberTextField;
     @FXML TextField unitNumberTextField;
-
     @FXML ComboBox<String> countryComboBox;
     @FXML RadioButton houseTypeRadioButton;
     @FXML RadioButton apartmentTypeRadioButton;
     @FXML RadioButton condoTypeRadioButton;
+    @FXML Button saveButton;
 
     // Private Properties.
     private ToggleGroup toggleGroup;
-    private BooleanProperty isTextFieldVisible = new SimpleBooleanProperty(false);
+    private String propertyType = "";
+    private BooleanProperty isBedRoomTextFieldVisible = new SimpleBooleanProperty(false);
+    private BooleanProperty isBathRoomTextFieldVisible = new SimpleBooleanProperty(false);
+    private BooleanProperty isSquareFootTextFieldVisible = new SimpleBooleanProperty(false);
+    private BooleanProperty isUnitNoTextFieldVisible = new SimpleBooleanProperty(false);
+    private BooleanProperty isApartmentTextFieldVisible = new SimpleBooleanProperty(false);
 
     // UIControls to be presented for the table view.
     @FXML TableView<Occupancy> occupancyTableView;
@@ -49,11 +52,11 @@ public class PropertyController {
     @FXML TableColumn<Occupancy, String> addressStreetNumberColumn;
 
     public void initialize() {
+        // TODO: - Fix this and load data from the file system.
         ArrayList<Occupancy> occupancyList = Occupancy.findOccupanciesWithStatus(Constants.OccupancyPath, null);
-        System.out.println("Fetched list is " + occupancyList);
-        loadTableViewData();
+        loadTableViewData(occupancyList);
         occupancySelectionType();
-        bedRoomCountTextField.visibleProperty().bind(isTextFieldVisible);
+        bindTextFieldVisibility();
     }
 
     private void occupancySelectionType() {
@@ -67,32 +70,119 @@ public class PropertyController {
         addPropertyChangeListener();
     }
 
+    private Occupancy createOccupancy() {
+        OccupancyCreator creator  = null;
+        Address address = new Address(streetNumberTextField.getText(),
+                streetNameTextField.getText(),
+                postalCodeField.getText(),
+                cityTextField.getText(),
+                countryComboBox.getValue());
+
+        if (propertyType.equals("house")) {
+            creator = new OccupancyCreator.Builder(address).build();
+        } else if(propertyType.equals("condo")) {
+            try {
+                int bedroom = Integer.parseInt(bedRoomCountTextField.getText());
+                int bathroom = Integer.parseInt(bathRoomCountTextField.getText());
+                double squareFoot = Double.parseDouble(squareFootTextField.getText());
+                int apartmentNumber = Integer.parseInt(apartmentNumberTextField.getText());
+                creator = new OccupancyCreator.Builder(bedroom,
+                        bathroom ,
+                        squareFoot,
+                        address, apartmentNumber).build();
+            } catch (Exception e) {
+                // TODO: - Throw the error message.
+            }
+        } else {
+            int bedroom = Integer.parseInt(bedRoomCountTextField.getText());
+            int bathroom = Integer.parseInt(bathRoomCountTextField.getText());
+            double squareFoot = Double.parseDouble(squareFootTextField.getText());
+            int unitNumber = Integer.parseInt(unitNumberTextField.getText());
+            creator = new OccupancyCreator.Builder(unitNumber,
+                    bathroom,
+                    bedroom,
+                    squareFoot,
+                    address).build();
+        }
+        return creator.createRentalUnit();
+    }
+
+    // Utility method to generate the alert message.
+    private void showAlert(String errorTitle, String errorDescription) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(errorTitle);
+        alert.setHeaderText(null);
+        alert.setContentText(errorDescription);
+        alert.showAndWait();
+    }
+
+    public void handleSaveButtonClicked(ActionEvent event) {
+        // TODO: - Handle Other labels also.
+        if (propertyType.equals("")) {
+            String messageContent = "Invalid property type selection";
+            String messageTitle = "Selection Type Error";
+            showAlert(messageTitle, messageContent);
+        }
+        Occupancy occupancy = createOccupancy();
+        if (addProperty(occupancy)) {
+            String messageContent = "Create User";
+            String messageTitle = "User has been create with us";
+            showAlert(messageTitle, messageContent);
+        } else {
+            String messageContent = "Error creating user";
+            String messageTitle = "There has been a error registering the user.";
+            showAlert(messageTitle, messageContent);
+        }
+    }
+
+    // method to bind the text fields based on the address type selection.
+    private void bindTextFieldVisibility() {
+        bedRoomCountTextField.visibleProperty().bind(isBedRoomTextFieldVisible);
+        bathRoomCountTextField.visibleProperty().bind(isBathRoomTextFieldVisible);
+        squareFootTextField.visibleProperty().bind(isSquareFootTextFieldVisible);
+        unitNumberTextField.visibleProperty().bind(isUnitNoTextFieldVisible);
+        apartmentNumberTextField.visibleProperty().bind(isApartmentTextFieldVisible);
+    }
+
     // Method to add the event listener to the property change of selected type.
     private void addPropertyChangeListener() {
         toggleGroup.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
             String propertySelection = (String) newToggle.getUserData();
-            System.out.println("Property selection is " + propertySelection);
-            if (propertySelection.equals("house")) {
-                isTextFieldVisible.set(false);
-            } else {
-                isTextFieldVisible.set(true);
+            propertyType = propertySelection;
+            switch (propertySelection) {
+                case "house":
+                    isBedRoomTextFieldVisible.set(false);
+                    isBathRoomTextFieldVisible.set(false);
+                    isSquareFootTextFieldVisible.set(false);
+                    isUnitNoTextFieldVisible.set(false);
+                    isApartmentTextFieldVisible.set(false);
+                    break;
+                case "condo":
+                    isUnitNoTextFieldVisible.set(true);
+                    isBedRoomTextFieldVisible.set(true);
+                    isBathRoomTextFieldVisible.set(true);
+                    isSquareFootTextFieldVisible.set(true);
+                    isApartmentTextFieldVisible.set(false);
+                    break;
+                case "apartment":
+                    isApartmentTextFieldVisible.set(true);
+                    isBedRoomTextFieldVisible.set(true);
+                    isBathRoomTextFieldVisible.set(true);
+                    isSquareFootTextFieldVisible.set(true);
+                    isUnitNoTextFieldVisible.set(false);
+                    break;
             }
         });
     }
 
-    public void loadTableViewData() {
+    public void loadTableViewData(List<Occupancy> occupancyList) {
         // dummy occupancy.
         Address houseAddress = new Address("2175", "De Maisonnuve Ouest",
                 "H3H 1L5", "Montreal", "Canada");
         OccupancyCreator creator = new OccupancyCreator.Builder(houseAddress).build();
         Occupancy occupancy = creator.createRentalUnit();
 
-        ObservableList<Occupancy> data = FXCollections.observableArrayList(
-                occupancy,
-                occupancy,
-                occupancy,
-                occupancy
-        );
+        ObservableList<Occupancy> data = FXCollections.observableArrayList(occupancyList);
         occupancyTableView.setItems(data);
         occupancyIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId().toString()));
         addressCityColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.
@@ -120,5 +210,18 @@ public class PropertyController {
                 "Australia"
         );
         countryComboBox.setValue("Canada");
+    }
+
+    // Controller Methods to link to the Models.
+    private Administrator administrator = Administrator.makeSharedInstance();
+
+    public Boolean addProperty(Occupancy occupancy) {
+        try {
+            administrator.addUnit(occupancy);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Exception occurred: " + e.getMessage());
+            return false;
+        }
     }
 }
