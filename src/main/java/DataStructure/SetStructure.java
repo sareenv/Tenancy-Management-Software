@@ -2,24 +2,24 @@ package DataStructure;
 
 public class SetStructure implements  IdentifiableObject{
 
-    private Integer objectId = null;
+    private Integer objectID = null;
     private String element = null;
 
     public SetStructure(int objectId, String element){
-        this.objectId = objectId;
+        this.objectID = objectId;
         this.element = element;
     }
 
     @Override
     public String toString() {
-        return "SetStructure{" +
-                "objectId=" + objectId +
+        return "Set{" +
+                "objectId=" + objectID +
                 ", element='" + element + '\'' +
                 '}';
     }
 
     @Override
     public Integer getObjectID() {
-        return null;
+        return objectID;
     }
 }

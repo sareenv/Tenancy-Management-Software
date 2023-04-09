@@ -20,7 +20,7 @@ public class Driver {
     public static void addElement(){
         int id = getId();
 
-        System.out.println("Please enter element value:- ");
+        System.out.print("Please enter element value:- ");
         String element = sc.nextLine();
         while(element.length() == 0){
             element = sc.nextLine();
@@ -29,7 +29,7 @@ public class Driver {
         SetStructure setStructure = new SetStructure(id,element);
         set.addElement(setStructure);
 
-        System.out.println("Element Added Successfully!");
+        System.out.println("\n Element Added Successfully!\n");
     }
 
     public static void removeElement(){
@@ -39,34 +39,35 @@ public class Driver {
         SetStructure setStructure = set.removeElement(id);
         System.out.println(setStructure);
 
-        System.out.println("Element Removed Successfully!");
+        System.out.println("\n Element Removed Successfully! \n");
 
     }
 
     public static void displayAllElements(){
         set.displayElements();
+        System.out.println();
     }
 
     public static void getPeek(){
+
+        if(set.size() == 0){
+            System.out.println("Set is Empty!!!\n");
+            return;
+        }
+
         int id = getId();
         Boolean val = set.peek(id);
 
         if(val){
-            System.out.println("True, Element present in set");
+            System.out.println("True, Element present in set\n");
         }else{
-            System.out.println("False, Element not present in set");
+            System.out.println("False, Element not present in set\n");
         }
     }
 
     public static void getSize(){
-        System.out.println(set.size());
+        System.out.println("Set Current Size: " + set.size());
     }
-
-    public static void compareSet(){
-
-    }
-
-
 
     public static void main(String args[]){
 
@@ -94,10 +95,10 @@ public class Driver {
             }else if(choice == 4){
                 getSize();
             }else if(choice == 5){
-                compareSet();
-            }else if(choice == 6){
                 displayAllElements();
             }
-        }while(choice < 7);
+        }while(choice < 6);
+
+        System.out.println("Thanks for using:)");
     }
 }
