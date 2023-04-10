@@ -1,15 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567" prefWidth="582" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="783.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fxproject.TenantController">
    <children>
-      <Text fill="black" layoutX="7.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello Tenants" textAlignment="CENTER" wrappingWidth="585.41259765625">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Text>
+      <TabPane layoutX="6.0" layoutY="6.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Create Tenant">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="347.0" prefWidth="450.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox alignment="CENTER" spacing="5.0">
+                                 <children>
+                                    <TextField fx:id="nameTextField" prefHeight="35.0" prefWidth="263.0" promptText="Please enter the full name" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER" spacing="5.0">
+                                 <children>
+                                    <ComboBox fx:id="occupationsComboBox" prefHeight="35.0" prefWidth="265.0" promptText="Please enter occupation" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER" spacing="5.0">
+                                 <children>
+                                    <TextField fx:id="monthlySalaryTextField" prefHeight="37.0" prefWidth="265.0" promptText="Please enter the Monthly Income" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveTenantButtonClicked" prefHeight="46.0" prefWidth="268.0" style="-fx-background-color: #393E46; -fx-border-radius: 10;" text="Register Tenant" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="All Tenants">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane pannable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <TableView fx:id="tenantTableView" prefHeight="537.0" prefWidth="783.0">
+                                <columns>
+                                  <TableColumn fx:id="tenantNameColumn" prefWidth="183.0" text="Tenant Name" />
+                                  <TableColumn fx:id="tenantOccupationColumn" prefWidth="209.0" text="Occupation" />
+                                    <TableColumn fx:id="tenantMonthlySalaryColumn" prefWidth="159.0" text="Monthly Income" />
+                                    <TableColumn fx:id="tenantIdColumn" prefWidth="183.0" text="Tenant Type" />
+                                </columns>
+                              </TableView>
+                           </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

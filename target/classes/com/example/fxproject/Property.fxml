@@ -26,31 +26,35 @@
                      <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="704.0" style="-fx-background-color: white;">
                            <children>
-                              <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="629.0" spacing="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                              <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="629.0" spacing="14.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                                  <children>
-                                    <TextField fx:id="streetNumberTextField" prefHeight="40.0" prefWidth="598.0" promptText="Please enter the Street Number">
+                                    <TextField fx:id="streetNumberTextField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="545.0" promptText="Please enter the Street Number">
                                        <VBox.margin>
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <TextField fx:id="streetNameTextField" prefHeight="40.0" prefWidth="597.0" promptText="Please enter the Street Name">
+                                    <TextField fx:id="streetNameTextField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="545.0" promptText="Please enter the Street Name">
                                        <VBox.margin>
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <TextField fx:id="postalCodeField" prefHeight="40.0" prefWidth="609.0" promptText="Postal Code">
+                                    <HBox spacing="40.0">
                                        <VBox.margin>
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
-                                    </TextField>
-                                    <HBox prefHeight="59.0" prefWidth="665.0" spacing="20.0">
                                        <children>
-                                          <TextField fx:id="cityTextField" prefHeight="43.0" prefWidth="395.0" promptText="Please enter the city">
+                                          <TextField fx:id="postalCodeField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" promptText="Postal Code" />
+                                          <TextField fx:id="apartmentNumberTextField" prefHeight="35.0" prefWidth="305.0" promptText="Apartment No" />
+                                       </children>
+                                    </HBox>
+                                    <HBox minHeight="-Infinity" prefHeight="35.0" prefWidth="665.0" spacing="20.0">
+                                       <children>
+                                          <TextField fx:id="cityTextField" prefHeight="35.0" prefWidth="390.0" promptText="Please enter the city">
                                              <HBox.margin>
                                                 <Insets left="10.0" right="10.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <ComboBox fx:id="countryComboBox" prefHeight="42.0" prefWidth="179.0" promptText="Country" style="-fx-background-color: white; -fx-border-color: gray;">
+                                          <ComboBox fx:id="countryComboBox" prefHeight="42.0" prefWidth="179.0" promptText="Country">
                                              <HBox.margin>
                                                 <Insets left="10.0" right="10.0" />
                                              </HBox.margin>
@@ -60,7 +64,7 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <HBox spacing="20.0">
+                                    <HBox minHeight="-Infinity" prefHeight="35.0" spacing="20.0">
                                        <children>
                                           <TextField fx:id="bathRoomCountTextField" prefHeight="43.0" prefWidth="160.0" promptText="No of bathrooms">
                                              <HBox.margin>
@@ -75,8 +79,7 @@
                                     </HBox>
                                     <HBox prefHeight="45.0" prefWidth="629.0" spacing="20.0">
                                        <children>
-                                          <TextField fx:id="apartmentNumberTextField" prefHeight="41.0" prefWidth="246.0" promptText="Apartment No" />
-                                          <TextField fx:id="unitNumberTextField" prefHeight="41.0" prefWidth="344.0" promptText="Unit Number">
+                                          <TextField fx:id="unitNumberTextField" minHeight="-Infinity" prefHeight="35.0" prefWidth="544.0" promptText="Unit Number">
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin></TextField>
@@ -86,29 +89,38 @@
                                        </VBox.margin>
                                     </HBox>
 
-                                     <HBox alignment="TOP_CENTER" spacing="50">
+                                     <HBox alignment="CENTER" spacing="20.0">
+                                       <Label text="Property Type">
+                                          <font>
+                                             <Font name="System Bold" size="14.0" />
+                                          </font>
+                                       </Label>
                                          
                                          <Label>
                                           <HBox.margin>
                                              <Insets top="10.0" />
                                           </HBox.margin></Label>
+                                             <RadioButton fx:id="houseTypeRadioButton" text="House" />
                                              <RadioButton fx:id="condoTypeRadioButton" text="Condo" />
                                              <RadioButton fx:id="apartmentTypeRadioButton" text="Apartment" />
-                                             <RadioButton fx:id="houseTypeRadioButton" text="House" />
                                        <VBox.margin>
                                           <Insets left="30.0" top="5.0" />
                                        </VBox.margin>
                                          
                                      </HBox>
-
-                                    <Button mnemonicParsing="false" onAction="#handleSaveButtonClicked" prefHeight="51.0" prefWidth="306.0" style="-fx-background-color: #393E46;" text="Add Property" textFill="#eeeeee">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
+                                    <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="35.0">
                                        <VBox.margin>
-                                          <Insets bottom="5.0" left="10.0" top="10.0" />
+                                          <Insets bottom="20.0" left="10.0" top="10.0" />
                                        </VBox.margin>
-                                    </Button>
+                                       <children>
+      
+                                          <Button mnemonicParsing="false" onAction="#handleSaveButtonClicked" prefHeight="35.0" prefWidth="587.0" style="-fx-background-color: #393E46;" text="Add Property" textFill="#eeeeee">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>

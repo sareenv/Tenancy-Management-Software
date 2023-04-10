@@ -14,11 +14,11 @@ import java.util.UUID;
 enum Type { WaitList, Lease, Expired, New }
 
 public class Tenant extends Observer implements Serializable {
-    UUID id;
-    String name;
-    String occupation;
-    Double monthlyIncome;
-    Type tenantType;
+    public UUID id;
+    public String name;
+    public String occupation;
+    public Double monthlyIncome;
+    public Type tenantType;
     static Service<Tenant> tenantService;
 
     public Tenant(String name, String occupation,

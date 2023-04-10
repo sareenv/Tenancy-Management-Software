@@ -3,6 +3,7 @@ package Tests;
 import Builder.OccupancyCreator;
 import DataAccess.Service;
 import Model.*;
+
 import org.junit.*;
 
 import java.io.ByteArrayOutputStream;
@@ -11,7 +12,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class LeaseTest {
 
@@ -51,12 +53,12 @@ public class LeaseTest {
         Assert.assertFalse(lease.checkLeaseValidity());
     }
 
-    @Test
-    public void checkNullLeaseObjects() throws ParseException {
+    @Test(expected = Exception.class)
+    public void checkNullLeaseObjects() throws Exception {
         Date startDate = new SimpleDateFormat("MM/dd/yyyy").parse("05/01/2020");
         Date endDate = new SimpleDateFormat("MM/dd/yyyy").parse("04/01/2020");
         Lease lease = new Lease(null, null, startDate, endDate);
-//        Assert.assertThrows(Exception.class, lease::registerLease);
+        lease.registerLease();
     }
 
     @Test
@@ -119,12 +121,12 @@ public class LeaseTest {
         }
     }
 
-    @Test
-    public void saveInvalidLease() throws ParseException {
+    @Test(expected = Exception.class)
+    public void saveInvalidLease() throws Exception {
         Date startDate = new SimpleDateFormat("MM/dd/yyyy").parse("05/01/2020");
         Date endDate = new SimpleDateFormat("MM/dd/yyyy").parse("04/01/2020");
         Lease lease = new Lease(null, null, startDate, endDate);
-//        Assert.assertThrows(Exception.class, lease::registerLease);
+        lease.registerLease();
     }
 
     @Test

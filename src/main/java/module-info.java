@@ -5,7 +5,7 @@ module com.example.fxproject {
 
     opens com.example.fxproject to javafx.fxml;
     opens Tests to junit;
-
     exports com.example.fxproject;
     opens Tests.Objects to junit;
+
 }

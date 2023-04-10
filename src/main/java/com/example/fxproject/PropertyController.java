@@ -56,6 +56,8 @@ public class PropertyController {
         ArrayList<Occupancy> occupancyList = Occupancy.findOccupanciesWithStatus(Constants.OccupancyPath, null);
         loadTableViewData(occupancyList);
         occupancySelectionType();
+        // default selection.
+        toggleGroup.selectToggle(houseTypeRadioButton);
         bindTextFieldVisibility();
     }
 
@@ -117,7 +119,6 @@ public class PropertyController {
                 return null;
             }
         }
-
     }
 
     // Utility method to generate the alert message.
@@ -189,12 +190,6 @@ public class PropertyController {
     }
 
     public void loadTableViewData(List<Occupancy> occupancyList) {
-        // dummy occupancy.
-        Address houseAddress = new Address("2175", "De Maisonnuve Ouest",
-                "H3H 1L5", "Montreal", "Canada");
-        OccupancyCreator creator = new OccupancyCreator.Builder(houseAddress).build();
-        Occupancy occupancy = creator.createRentalUnit();
-
         ObservableList<Occupancy> data = FXCollections.observableArrayList(occupancyList);
         try {
             occupancyTableView.setItems(data);
@@ -207,7 +202,6 @@ public class PropertyController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     public void setupCountryComboBox() {
