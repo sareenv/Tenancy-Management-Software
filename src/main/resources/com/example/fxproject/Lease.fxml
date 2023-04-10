@@ -8,38 +8,41 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="665.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="783.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fxproject.LeaseController">
    <children>
-      <TabPane layoutX="6.0" layoutY="7.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="leaseTabPane" layoutY="6.0" prefHeight="561.0" prefWidth="783.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="Register Lease">
+          <Tab text="Create a Lease">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+              <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#handleNewLeaseSave" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <VBox layoutX="223.0" layoutY="137.0" spacing="10.0">
+                        <VBox prefHeight="196.0" prefWidth="250.0" spacing="10.0" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="100.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lease Registeration Form" textAlignment="CENTER" wrappingWidth="221.21630859375" />
-                              <ComboBox prefHeight="39.0" prefWidth="218.0" promptText="Select Occupancy" />
-                              <TextField prefHeight="42.0" prefWidth="199.0" promptText="Enter the tenant ID" />
-                              <DatePicker prefHeight="42.0" prefWidth="219.0" promptText="Lease Start Date" />
-                              <DatePicker prefHeight="42.0" prefWidth="220.0" promptText="Lease End Date" />
-                              <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: #393E46;" text="New Lease" textFill="WHITE" />
+                              <TextField fx:id="tenantIDTextField" prefHeight="38.0" prefWidth="254.0" promptText="Please enter Tenant ID" />
+                              <DatePicker fx:id="leaseStartDatePicker" prefHeight="38.0" prefWidth="588.0" promptText="Lease Start Date" />
+                              <DatePicker fx:id="leaseEndDatePicker" prefHeight="38.0" prefWidth="585.0" promptText="Lease End Date" />
+                              <ComboBox prefHeight="45.0" prefWidth="592.0" promptText="Please Select Occupancy" />
+                              <Button mnemonicParsing="false" onMouseClicked="#handleNewLeaseSave" prefHeight="49.0" prefWidth="585.0" style="-fx-background-color: #393E46;" text="REGISTER LEASE" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </VBox>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Existing Lease">
+          <Tab text="All Lease">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
             <Tab text="Expired Lease">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
         </tabs>

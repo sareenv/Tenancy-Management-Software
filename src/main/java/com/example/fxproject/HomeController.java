@@ -1,11 +1,9 @@
 
 package com.example.fxproject;
-import javafx.application.Platform;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.LoadException;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -66,11 +64,10 @@ public class HomeController {
             if (url != null) {
                 FXMLLoader loader = new FXMLLoader(url);
                 AnchorPane pane  = loader.load();
+                System.out.println(pane);
                 Object controller = null;
                 controller = loader.getController();
-                System.out.println("Controller is " + controller);
                 viewerPane.getChildren().setAll(pane);
-                System.out.println("setup the children");
                 return controller;
             } else {
                 System.out.println("URL is missing");
