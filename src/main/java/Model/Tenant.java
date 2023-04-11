@@ -4,6 +4,7 @@ import Abstract.Observer;
 import Abstract.Subject;
 import DataAccess.Service;
 import Interface.Constants;
+import com.example.fxproject.NotificationController;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class Tenant extends Observer implements Serializable {
                     occupancy.id.toString(),
                     occupancy.getOccupancyAddress().toString());
             System.out.println("Getting the notification as " + notification);
+            NotificationController.updatedNotification(notification);
         } else {
             System.out.println("Some other notification");
         }

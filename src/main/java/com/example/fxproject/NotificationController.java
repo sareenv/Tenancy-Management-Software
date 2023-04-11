@@ -11,9 +11,7 @@ import javafx.scene.control.TableView;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: - Add the table view with the notifications.
 public class NotificationController {
-    // UIControls.
    @FXML
     TableView<Notification> notificationTableView;
     TableColumn<Notification, String> tenantIDColumn;
@@ -34,13 +32,17 @@ public class NotificationController {
         ObservableList<Notification> data = FXCollections.observableArrayList(list);
         try {
             notificationTableView.setItems(data);
+            tenantIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTenantID()));
+            tenantNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTenantName()));
             occupancyIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOccupancyId()));
+            occupancyAddressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress()));
+            notificationMessageColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMessage()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void updatedNotification(Notification notification) {
+    public static void updatedNotification(Notification notification) {
         notifications.add(notification);
     }
 }

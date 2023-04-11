@@ -83,6 +83,7 @@ public class Lease implements Serializable {
                 Occupancy updateOccupancy = this.occupancy.deepClone();
                 updateOccupancy.setIsOccupancyAvailable(true);
                 occupancyService.updateRecord(this.occupancy, updateOccupancy);
+                Administrator.makeSharedInstance().notifyAllObserver();
                 return leaseService.deleteRecord(this);
             } catch (Exception e) {
                 return false;
