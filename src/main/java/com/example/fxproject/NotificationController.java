@@ -12,20 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationController {
-   @FXML
-    TableView<Notification> notificationTableView;
-    TableColumn<Notification, String> tenantIDColumn;
-    TableColumn<Notification, String> tenantNameColumn;
-    TableColumn<Notification, String> occupancyIDColumn;
-    TableColumn<Notification, String> occupancyAddressColumn;
-    TableColumn<Notification, String> notificationMessageColumn;
+    @FXML TableView<Notification> notificationTableView;
+    @FXML TableColumn<Notification, String> tenantIDColumn;
+    @FXML TableColumn<Notification, String> tenantNameColumn;
+    @FXML TableColumn<Notification, String> occupancyIDColumn;
+    @FXML TableColumn<Notification, String> occupancyAddressColumn;
+    @FXML TableColumn<Notification, String> notificationMessageColumn;
 
     // Private attributes.
-    private static ArrayList<Notification> notifications = new ArrayList<>();
+    static ArrayList<Notification> notifications = new ArrayList<>();
 
     public void initialize() {
         notificationTableView.getItems().clear();
-        loadTableViewData(notifications);
+        loadTableViewData(NotificationController.notifications);
     }
 
     public void loadTableViewData(List<Notification> list) {
@@ -43,6 +42,6 @@ public class NotificationController {
     }
 
     public static void updatedNotification(Notification notification) {
-        notifications.add(notification);
+        NotificationController.notifications.add(notification);
     }
 }
