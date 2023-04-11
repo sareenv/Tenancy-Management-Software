@@ -185,6 +185,12 @@ public class LeaseController {
     private void registerLease() {
         String tenantID = tenantComboBox.getValue();
         String occupancyId = occupanciesComboBox.getValue();
+        if (tenantID == null || occupancyId == null) {
+            showAlert("Unselected", "Please check occupancy " +
+                    "or tenant is unselected ");
+            return;
+        }
+
         if (!tenantID.contains("-") || !occupancyId.contains("~")) {
             showAlert("Unselected", "Please check occupancy " +
                     "or tenant is unselected ");
@@ -211,7 +217,7 @@ public class LeaseController {
                     showAlert("Success", "A lease for the tenant " +
                             "has been registered");
                 }catch (Exception e) {
-                    showAlert("Error", "Error while registering the lease for tenant");
+                    showAlert("Error", e.getMessage());
                 }
             } else {
                 showAlert("Invalid Dates Error", "Invalid dates are used to register the lease");
