@@ -51,10 +51,16 @@ public class PropertyController {
     @FXML TableColumn<Occupancy, String> addressStreetNameColumn;
     @FXML TableColumn<Occupancy, String> addressStreetNumberColumn;
 
-    public void initialize() {
-        // TODO: - Fix this and load data from the file system.
-        ArrayList<Occupancy> occupancyList = Occupancy.findOccupanciesWithStatus(Constants.OccupancyPath, null);
+    public void initialize() throws InterruptedException {
+
+        ThreadRun thread = new ThreadRun();
+
+        thread.start();
+        thread.join();
+
+        ArrayList<Occupancy> occupancyList = thread.occupancyList;
         loadTableViewData(occupancyList);
+
         occupancySelectionType();
         // default selection.
         toggleGroup.selectToggle(houseTypeRadioButton);
