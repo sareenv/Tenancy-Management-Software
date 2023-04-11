@@ -45,11 +45,13 @@ public class PropertyController {
 
     // UIControls to be presented for the table view.
     @FXML TableView<Occupancy> occupancyTableView;
+    @FXML TableColumn<Occupancy, String> occupancyTypeColumn;
     @FXML TableColumn<Occupancy, String> occupancyIDColumn;
     @FXML TableColumn<Occupancy, String> addressCityColumn;
     @FXML TableColumn<Occupancy, String> addressCountryColumn;
     @FXML TableColumn<Occupancy, String> addressStreetNameColumn;
     @FXML TableColumn<Occupancy, String> addressStreetNumberColumn;
+    @FXML TableColumn<Occupancy, String> isOccupiedStatusColumn;
 
     public void initialize() {
         // TODO: - Fix this and load data from the file system.
@@ -139,8 +141,8 @@ public class PropertyController {
         }
         Occupancy occupancy = createOccupancy();
         if (addProperty(occupancy)) {
-            String messageContent = "Create User";
-            String messageTitle = "User has been create with us";
+            String messageContent = "Success";
+            String messageTitle = "New property has been registered to the system";
             showAlert(messageTitle, messageContent);
         } else {
             String messageContent = "Error creating user";
@@ -199,6 +201,8 @@ public class PropertyController {
             addressCountryColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOccupancyAddress().country));
             addressStreetNumberColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOccupancyAddress().streetNumber));
             addressStreetNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOccupancyAddress().streetName));
+            occupancyTypeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPropertyType()));
+            isOccupiedStatusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().isOccupancyAvailable() ? "Available" : "NOT Available"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -139,10 +139,12 @@
                         <TableView fx:id="occupancyTableView" layoutX="8.0" layoutY="7.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="occupancyIDColumn" prefWidth="131.0" text="ID" />
-                            <TableColumn fx:id="addressStreetNameColumn" prefWidth="172.0" text="Street Name" />
+                              <TableColumn fx:id="occupancyTypeColumn" prefWidth="75.0" text="Type" />
+                            <TableColumn fx:id="isOccupiedStatusColumn" prefWidth="172.0" text="Occupancy Status" />
                               <TableColumn fx:id="addressStreetNumberColumn" prefWidth="127.0" text="Street Number" />
                               <TableColumn fx:id="addressCityColumn" prefWidth="118.0" text="City" />
                               <TableColumn fx:id="addressCountryColumn" prefWidth="115.0" text="Country" />
+                              <TableColumn fx:id="addressStreetNameColumn" prefWidth="172.0" text="Street Name" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>

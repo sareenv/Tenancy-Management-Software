@@ -76,15 +76,21 @@ public class OccupancyCreator {
     public Occupancy createRentalUnit() {
         switch (type) {
             case "1":
-                return new Condo(unitNumber,
+                Occupancy condoOccupancy = new Condo(unitNumber,
                         bedroomCount,
                         bathroomCount,
                         squareFootage, address);
+                condoOccupancy.setPropertyType("Condo");
+                return condoOccupancy;
             case "2":
-                return new House(address);
+                Occupancy houseOccupancy = new House(address);
+                houseOccupancy.setPropertyType("House");
+                return houseOccupancy;
             default:
-                return new Apartment(apartmentNumber, bedroomCount,
+                Occupancy apartmentOccupancy = new Apartment(apartmentNumber, bedroomCount,
                         bathroomCount, squareFootage, address);
+                apartmentOccupancy.setPropertyType("Apartment");
+                return apartmentOccupancy;
         }
     }
 

@@ -12,7 +12,10 @@ public abstract class Occupancy implements Serializable {
     public final UUID id = UUID.randomUUID();
     public UUID getId() { return id; }
     boolean isOccupancyAvailable = true;
+    String propertyType = "";
     public abstract Address getOccupancyAddress();
+    public void setPropertyType(String type) { this.propertyType = type; }
+    public String getPropertyType() { return this.propertyType; }
     public void setIsOccupancyAvailable(boolean isAvailable) {this.isOccupancyAvailable = isAvailable; }
     public boolean isOccupancyAvailable() { return isOccupancyAvailable; }
     public static void addUnit(Occupancy occupancy, String filePath) {
