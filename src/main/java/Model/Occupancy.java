@@ -3,7 +3,7 @@ package Model;
 import DataAccess.Service;
 import Interface.ConstantsService;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
@@ -41,6 +41,18 @@ public abstract class Occupancy implements Serializable {
             }
         }
         return null;
+    }
+
+    public Occupancy deepClone() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(this);
+        oos.flush();
+        oos.close();
+        bos.close();
+        byte[] byteData = bos.toByteArray();
+        ByteArrayInputStream bais = new ByteArrayInputStream(byteData);
+        return (Occupancy) new ObjectInputStream(bais).readObject();
     }
 
     @Override

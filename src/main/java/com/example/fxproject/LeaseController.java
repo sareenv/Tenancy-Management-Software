@@ -101,9 +101,10 @@ public class LeaseController {
                         Lease lease = getTableRow().getItem();
                         // TODO: Delete the person from your data model.
                         lease.getOccupancy().setIsOccupancyAvailable(true);
-                        lease.deleteLease();
+                        boolean result = lease.deleteLease();
+                        System.out.println(result);
                         allLeaseTableView.getItems().clear();
-                        loadAllLeaseTableViewData();
+//                        loadAllLeaseTableViewData();
                     });
                 }
 
