@@ -140,7 +140,7 @@
                            <children>
                               <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-padding: 20;">
                                  <children>
-                                    <ComboBox prefHeight="40.0" prefWidth="217.0" promptText="Select Filter" />
+                                    <ComboBox fx:id="filterComboBox" prefHeight="40.0" prefWidth="217.0" promptText="Select Filter" />
                                     <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="65.0" text="Filter" />
                                  </children>
                               </HBox>

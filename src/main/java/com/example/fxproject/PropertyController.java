@@ -8,6 +8,8 @@ import Model.Occupancy;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,6 +34,7 @@ public class PropertyController {
     @FXML RadioButton houseTypeRadioButton;
     @FXML RadioButton apartmentTypeRadioButton;
     @FXML RadioButton condoTypeRadioButton;
+    @FXML ComboBox<String> filterComboBox;
     @FXML Button saveButton;
 
     // Private Properties.
@@ -61,6 +64,8 @@ public class PropertyController {
         // default selection.
         toggleGroup.selectToggle(houseTypeRadioButton);
         bindTextFieldVisibility();
+        prefetchFilterOptions();
+        inputValueChanged();
     }
 
     private void occupancySelectionType() {
@@ -72,6 +77,41 @@ public class PropertyController {
         condoTypeRadioButton.setToggleGroup(toggleGroup);
         condoTypeRadioButton.setUserData("condo");
         addPropertyChangeListener();
+    }
+
+    // Method to detect the input value changed for the filter combobox
+    public void inputValueChanged() {
+        filterComboBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                switch (newValue) {
+                    case "All Properties":
+                        occupancyTableView.getItems().clear();
+                        loadTableViewData(displayAllProperties());
+                        break;
+
+                    case "Rented Properties":
+                        occupancyTableView.getItems().clear();
+                        loadTableViewData(displayRentedProperties());
+                        break;
+
+                    case "Vacant Properties":
+                        occupancyTableView.getItems().clear();
+                        loadTableViewData(displayVacantProperties());
+                        break;
+                }
+            }
+        });
+    }
+
+    // Method to add the options for the filter options for the property.
+    public void prefetchFilterOptions() {
+        ArrayList<String> options = new ArrayList<>();
+        options.add("All Properties");
+        options.add("Rented Properties");
+        options.add("Vacant Properties");
+        filterComboBox.getItems().addAll(options);
+        filterComboBox.setValue(options.get(0));
     }
 
     private Occupancy createOccupancy() {
