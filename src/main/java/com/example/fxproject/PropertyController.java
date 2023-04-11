@@ -53,7 +53,7 @@ public class PropertyController {
 
     public void initialize() throws InterruptedException {
 
-        ThreadRun thread = new ThreadRun();
+        ThreadRun thread = new ThreadRun("display");
 
         thread.start();
         thread.join();
@@ -78,53 +78,52 @@ public class PropertyController {
         addPropertyChangeListener();
     }
 
-    private Occupancy createOccupancy() {
+    private Occupancy createOccupancy() throws InterruptedException {
+
         OccupancyCreator creator  = null;
-        Address address = new Address(streetNumberTextField.getText(),
-                streetNameTextField.getText(),
-                postalCodeField.getText(),
-                cityTextField.getText(),
-                countryComboBox.getValue());
+        ThreadRun threadRun = null;
+        Address address = new Address(streetNumberTextField.getText(), streetNameTextField.getText(), postalCodeField.getText(), cityTextField.getText(), countryComboBox.getValue());
 
         if (propertyType.equals("house")) {
-            creator = new OccupancyCreator.Builder(address).build();
-            return creator.createRentalUnit();
+            threadRun = new ThreadRun("createHouse");
+            threadRun.homeOccupancy(address);
+
         } else if(propertyType.equals("apartment")) {
-            // Creating a condo type.
+            // Creating a apartment type.
             try {
                 int bedroom = Integer.parseInt(bedRoomCountTextField.getText());
                 int bathroom = Integer.parseInt(bathRoomCountTextField.getText());
                 double squareFoot = Double.parseDouble(squareFootTextField.getText());
                 int apartmentNumber = Integer.parseInt(apartmentNumberTextField.getText());
-                creator = new OccupancyCreator.Builder(bedroom,
-                        bathroom ,
-                        squareFoot,
-                        address, apartmentNumber).build();
-                return creator.createRentalUnit();
+
+                threadRun = new ThreadRun("createApartment");
+                threadRun.apartmentOccupancy(address,bedroom,bathroom,squareFoot,apartmentNumber);
+
             } catch (Exception e) {
                 // TODO: - Throw the error message.
                 showAlert("Invalid Type Error", e.getMessage());
                 return null;
             }
         } else {
-            // Creating an apartment type.
+            // Creating an condo type.
             try {
                 int bedroom = Integer.parseInt(bedRoomCountTextField.getText());
                 int bathroom = Integer.parseInt(bathRoomCountTextField.getText());
                 double squareFoot = Double.parseDouble(squareFootTextField.getText());
                 int unitNumber = Integer.parseInt(unitNumberTextField.getText());
-                System.out.println(unitNumberTextField.getText());
-                creator = new OccupancyCreator.Builder(unitNumber,
-                        bathroom,
-                        bedroom,
-                        squareFoot,
-                        address).build();
-                return creator.createRentalUnit();
+
+                threadRun = new ThreadRun("createCondo");
+                threadRun.apartmentOccupancy(address,bedroom,bathroom,squareFoot,unitNumber);
+
+
             }catch (Exception e) {
                 showAlert("Invalid Type Error", e.getMessage());
                 return null;
             }
         }
+        threadRun.start();
+        threadRun.join();
+        return threadRun.occupancy;
     }
 
     // Utility method to generate the alert message.
@@ -136,13 +135,14 @@ public class PropertyController {
         alert.showAndWait();
     }
 
-    public void handleSaveButtonClicked(ActionEvent event) {
+    public void handleSaveButtonClicked(ActionEvent event) throws InterruptedException {
         // TODO: - Handle Other labels also.
         if (propertyType.equals("")) {
             String messageContent = "Invalid property type selection";
             String messageTitle = "Selection Type Error";
             showAlert(messageTitle, messageContent);
         }
+
         Occupancy occupancy = createOccupancy();
         if (addProperty(occupancy)) {
             String messageContent = "Create User";
