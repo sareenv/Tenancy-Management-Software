@@ -42,18 +42,24 @@ public class TenantController {
     }
 
 
-    private Administrator administrator;
+    //private Administrator administrator;
 
     @FXML
-    public void initialize() {
-        administrator = Administrator.makeSharedInstance();
+    public void initialize() throws InterruptedException {
+        //administrator = Administrator.makeSharedInstance();
         addComboOptionsMenu();
         ArrayList<Tenant> allTenants = displayAllTenants();
         loadTableViewData(allTenants);
     }
 
-    public ArrayList<Tenant> displayAllTenants() {
-        return Tenant.getAllTenants();
+    public ArrayList<Tenant> displayAllTenants() throws InterruptedException {
+
+        ThreadRun thread = new ThreadRun("displayTenant");
+        thread.start();
+        thread.join();
+
+        return thread.allTenants;
+        //return Tenant.getAllTenants();
     }
 
     public void addComboOptionsMenu() {
@@ -79,6 +85,7 @@ public class TenantController {
             String name = nameTextField.getText();
             String occupation = occupationsComboBox.getValue();
             Double income = Double.parseDouble(monthlySalaryTextField.getText());
+
             boolean result = addTenant(name, occupation, income);
             if (result) {
                 // TODO: - Show the alert message with the success.
@@ -95,7 +102,14 @@ public class TenantController {
         }
     }
 
-    public Boolean addTenant(String name, String occupation, Double monthlyIncome) {
-        return administrator.addTenant(name, occupation, monthlyIncome);
+    public Boolean addTenant(String name, String occupation, Double monthlyIncome) throws InterruptedException {
+
+        ThreadRun thread = new ThreadRun("createTenant");
+        thread.createTenant(name,occupation,monthlyIncome);
+        thread.start();
+        thread.join();
+
+        //return administrator.addTenant(name, occupation, monthlyIncome);
+        return thread.result;
     }
 }

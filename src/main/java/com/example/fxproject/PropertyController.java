@@ -113,7 +113,7 @@ public class PropertyController {
                 int unitNumber = Integer.parseInt(unitNumberTextField.getText());
 
                 threadRun = new ThreadRun("createCondo");
-                threadRun.apartmentOccupancy(address,bedroom,bathroom,squareFoot,unitNumber);
+                threadRun.condoOccupancy(address,bedroom,bathroom,squareFoot,unitNumber);
 
 
             }catch (Exception e) {
