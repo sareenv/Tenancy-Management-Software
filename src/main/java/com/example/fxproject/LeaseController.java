@@ -104,7 +104,8 @@ public class LeaseController {
                         boolean result = lease.deleteLease();
                         System.out.println(result);
                         allLeaseTableView.getItems().clear();
-//                        loadAllLeaseTableViewData();
+                        administrator.notifyAllObserver();
+                        loadAllLeaseTableViewData();
                     });
                 }
 

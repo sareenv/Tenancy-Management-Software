@@ -45,6 +45,7 @@ public class Tenant extends Observer implements Serializable {
         }
     }
 
+    // TODO: - Need to look into this one.
     @Override
     public void update(Subject subject, Object event) {
         System.out.println("The Wait listed occupancy is now Available with the details below");
@@ -98,7 +99,10 @@ public class Tenant extends Observer implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Tenant)) return false;
         Tenant tenant = (Tenant) o;
-        return Objects.equals(id, tenant.id) && Objects.equals(name, tenant.name) && Objects.equals(occupation, tenant.occupation) && Objects.equals(monthlyIncome, tenant.monthlyIncome) && getTenantType() == tenant.getTenantType();
+        return Objects.equals(id, tenant.id) && Objects.equals(name, tenant.name) &&
+                Objects.equals(occupation, tenant.occupation)
+                && Objects.equals(monthlyIncome, tenant.monthlyIncome)
+                && getTenantType().equals(tenant.getTenantType());
     }
 
     @Override
