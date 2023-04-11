@@ -48,8 +48,16 @@ public class Tenant extends Observer implements Serializable {
     // TODO: - Need to look into this one.
     @Override
     public void update(Subject subject, Object event) {
-        System.out.println("The Wait listed occupancy is now Available with the details below");
-        System.out.println(event);
+        if (event instanceof Occupancy) {
+            Occupancy occupancy = (Occupancy) event;
+            Notification notification = new Notification(this.id.toString(),
+                    this.name,
+                    occupancy.id.toString(),
+                    occupancy.getOccupancyAddress().toString());
+            System.out.println("Getting the notification as " + notification);
+        } else {
+            System.out.println("Some other notification");
+        }
     }
 
     boolean addTenant() {

@@ -56,6 +56,9 @@ public class PropertyController {
     @FXML TableColumn<Occupancy, String> addressStreetNumberColumn;
     @FXML TableColumn<Occupancy, String> isOccupiedStatusColumn;
 
+    // Controller Methods to link to the Models.
+    private Administrator administrator = Administrator.makeSharedInstance();
+
     public void initialize() {
         // TODO: - Fix this and load data from the file system.
         ArrayList<Occupancy> occupancyList = Occupancy.findOccupanciesWithStatus(Constants.OccupancyPath, null);
@@ -230,7 +233,7 @@ public class PropertyController {
             }
         });
     }
-
+    // Utility method to load the data based on the provided list.
     public void loadTableViewData(List<Occupancy> occupancyList) {
         ObservableList<Occupancy> data = FXCollections.observableArrayList(occupancyList);
         try {
@@ -268,8 +271,7 @@ public class PropertyController {
         countryComboBox.setValue("Canada");
     }
 
-    // Controller Methods to link to the Models.
-    private Administrator administrator = Administrator.makeSharedInstance();
+
 
     public Boolean addProperty(Occupancy occupancy) {
         try {
