@@ -39,7 +39,7 @@ public class LeaseController {
     private Lease lease;
 
     // Initialize method for the lease controller.
-    public void initialize() {
+    public void initialize() throws InterruptedException{
         administrator = Administrator.makeSharedInstance();
         handleTabPaneSwitch();
         prefetchOccupancies();
@@ -142,7 +142,14 @@ public class LeaseController {
 
     // Method to the data for all the lease.
     public ArrayList<Lease> getAllLease() {
-        return Lease.getAllLease(Constants.LeasePath);
+        ThreadRun thread = new ThreadRun("displayLease");
+        try {
+            thread.start();
+            thread.join();
+            return thread.allLeases;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     // Method to get the expired lease.
@@ -151,8 +158,12 @@ public class LeaseController {
     }
 
     // Method to find all the occupancies and fill the combobox.
-    public void prefetchOccupancies() {
-        ArrayList<Occupancy> occupancies =  Occupancy.findOccupanciesWithStatus(Constants.OccupancyPath, null);
+    public void prefetchOccupancies() throws  InterruptedException{
+        ThreadRun thread = new ThreadRun("display");
+        thread.start();
+        thread.join();
+
+        ArrayList<Occupancy> occupancies = thread.occupancyList;
         ArrayList<String> occupancyIDsList = new ArrayList<>();
         for (Occupancy occupancy: occupancies) {
             String occupancyString = occupancy.getId().toString() + "~ \n"
@@ -162,8 +173,11 @@ public class LeaseController {
         occupanciesComboBox.getItems().addAll(occupancyIDsList);
     }
 
-    public void prefetchAllTenants() {
-        ArrayList<Tenant> allTenants =  Tenant.getAllTenants();
+    public void prefetchAllTenants() throws InterruptedException {
+        ThreadRun thread = new ThreadRun("displayTenant");
+        thread.start();
+        thread.join();
+        ArrayList<Tenant> allTenants =  thread.allTenants;
         ArrayList<String> tenantDescriptionList = new ArrayList<>();
         for (Tenant tenant: allTenants) {
             String tenantString = tenant.id + " - " + tenant.name;
@@ -181,7 +195,7 @@ public class LeaseController {
         alert.showAndWait();
     }
 
-    private void registerLease() {
+    private void registerLease() throws InterruptedException{
         String tenantID = tenantComboBox.getValue();
         String occupancyId = occupanciesComboBox.getValue();
         if (tenantID == null || occupancyId == null) {
@@ -209,7 +223,11 @@ public class LeaseController {
             showAlert("Error", "Tenant or Occupancy could not be located with " +
                     "the selected id");
         } else {
-            Lease lease  = new Lease(occupancy, tenant, startDate, endDate);
+            ThreadRun thread = new ThreadRun("createLease");
+            thread.createLease(occupancy,tenant,startDate,endDate);
+            thread.start();
+            thread.join();
+            Lease lease = thread.lease;
             if (lease.checkLeaseValidity()) {
                 try {
                     lease.registerLease();
@@ -225,7 +243,7 @@ public class LeaseController {
     }
 
     // Method to handle the button click event.
-    public void handleNewLeaseSave() {
+    public void handleNewLeaseSave() throws InterruptedException {
         registerLease();
     }
 

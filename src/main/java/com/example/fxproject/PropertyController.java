@@ -59,9 +59,13 @@ public class PropertyController {
     // Controller Methods to link to the Models.
     private Administrator administrator = Administrator.makeSharedInstance();
 
-    public void initialize() {
-        // TODO: - Fix this and load data from the file system.
-        ArrayList<Occupancy> occupancyList = Occupancy.findOccupanciesWithStatus(Constants.OccupancyPath, null);
+    public void initialize() throws InterruptedException {
+
+        ThreadRun thread = new ThreadRun("display");
+        thread.start();
+        thread.join();
+
+        ArrayList<Occupancy> occupancyList = thread.occupancyList;
         loadTableViewData(occupancyList);
         occupancySelectionType();
         // default selection.
@@ -117,8 +121,9 @@ public class PropertyController {
         filterComboBox.setValue(options.get(0));
     }
 
-    private Occupancy createOccupancy() {
+    private Occupancy createOccupancy() throws InterruptedException{
         OccupancyCreator creator  = null;
+        ThreadRun threadRun = null;
         Address address = new Address(streetNumberTextField.getText(),
                 streetNameTextField.getText(),
                 postalCodeField.getText(),
@@ -126,44 +131,42 @@ public class PropertyController {
                 countryComboBox.getValue());
 
         if (propertyType.equals("house")) {
-            creator = new OccupancyCreator.Builder(address).build();
-            return creator.createRentalUnit();
+            threadRun = new ThreadRun("createHouse");
+            threadRun.homeOccupancy(address);
         } else if(propertyType.equals("apartment")) {
-            // Creating a condo type.
             try {
                 int bedroom = Integer.parseInt(bedRoomCountTextField.getText());
                 int bathroom = Integer.parseInt(bathRoomCountTextField.getText());
                 double squareFoot = Double.parseDouble(squareFootTextField.getText());
                 int apartmentNumber = Integer.parseInt(apartmentNumberTextField.getText());
-                creator = new OccupancyCreator.Builder(bedroom,
-                        bathroom ,
-                        squareFoot,
-                        address, apartmentNumber).build();
-                return creator.createRentalUnit();
+
+                threadRun = new ThreadRun("createApartment");
+                threadRun.apartmentOccupancy(address,bedroom,bathroom,squareFoot,apartmentNumber);
+
             } catch (Exception e) {
-                // TODO: - Throw the error message.
                 showAlert("Invalid Type Error", e.getMessage());
                 return null;
             }
         } else {
-            // Creating an apartment type.
+            // Creating a condo type.
             try {
                 int bedroom = Integer.parseInt(bedRoomCountTextField.getText());
                 int bathroom = Integer.parseInt(bathRoomCountTextField.getText());
                 double squareFoot = Double.parseDouble(squareFootTextField.getText());
                 int unitNumber = Integer.parseInt(unitNumberTextField.getText());
-                System.out.println(unitNumberTextField.getText());
-                creator = new OccupancyCreator.Builder(unitNumber,
-                        bathroom,
-                        bedroom,
-                        squareFoot,
-                        address).build();
-                return creator.createRentalUnit();
+
+                threadRun = new ThreadRun("createCondo");
+                threadRun.condoOccupancy(address,bedroom,bathroom,squareFoot,unitNumber);
+
+
             }catch (Exception e) {
                 showAlert("Invalid Type Error", e.getMessage());
                 return null;
             }
         }
+        threadRun.start();
+        threadRun.join();
+        return threadRun.occupancy;
     }
 
     // Utility method to generate the alert message.
@@ -175,7 +178,7 @@ public class PropertyController {
         alert.showAndWait();
     }
 
-    public void handleSaveButtonClicked(ActionEvent event) {
+    public void handleSaveButtonClicked(ActionEvent event) throws InterruptedException {
         // TODO: - Handle Other labels also.
         if (propertyType.equals("")) {
             String messageContent = "Invalid property type selection";
@@ -186,7 +189,7 @@ public class PropertyController {
         if (addProperty(occupancy)) {
             String messageContent = "Success";
             String messageTitle = "New property has been registered to the system";
-            showAlert(messageTitle, messageContent);
+            showAlert(messageContent, messageTitle);
         } else {
             String messageContent = "Error creating user";
             String messageTitle = "There has been a error registering the user.";
@@ -282,7 +285,6 @@ public class PropertyController {
         }
     }
 
-    // TODO: - Need to integrate this.
     public ArrayList<Occupancy> displayRentedProperties() {
         return Occupancy.findOccupanciesWithStatus(Constants.OccupancyPath, false);
     }
@@ -292,7 +294,6 @@ public class PropertyController {
         return Occupancy.findOccupanciesWithStatus(Constants.OccupancyPath, null);
     }
 
-    // TODO: - Need to integrate this.
     public ArrayList<Occupancy> displayVacantProperties() {
         ArrayList<Occupancy> rented = this.displayRentedProperties();
         ArrayList<Occupancy> allOccupancies = this.displayAllProperties();
