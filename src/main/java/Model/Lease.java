@@ -1,6 +1,7 @@
 package Model;
 
 import DataAccess.Service;
+import Interface.Constants;
 import Interface.ConstantsService;
 
 import java.io.Serializable;
@@ -18,6 +19,22 @@ public class Lease implements Serializable {
         this.tenant = tenant;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public Occupancy getOccupancy() {
+        return occupancy;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
     }
 
     public boolean checkLeaseValidity() {
@@ -54,6 +71,15 @@ public class Lease implements Serializable {
     public static ArrayList<Lease> getAllLease(String servicePath) {
         Service<Lease> leaseService = new Service<Lease>(servicePath);
         return leaseService.findAllRecordsFromFile();
+    }
+
+    public boolean deleteLease() {
+        ArrayList<Lease> allLease  = getAllLease(Constants.LeasePath);
+        if (allLease.contains(this)) {
+            Service<Lease> leaseService = new Service<Lease>(Constants.LeasePath);
+            return leaseService.deleteRecord(this);
+        }
+        return true;
     }
 
     @Override

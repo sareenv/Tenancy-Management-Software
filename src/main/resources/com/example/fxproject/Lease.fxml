@@ -5,7 +5,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -20,10 +21,10 @@
                      <children>
                         <VBox prefHeight="196.0" prefWidth="250.0" spacing="10.0" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="100.0">
                            <children>
-                              <TextField fx:id="tenantIDTextField" prefHeight="38.0" prefWidth="254.0" promptText="Please enter Tenant ID" />
                               <DatePicker fx:id="leaseStartDatePicker" prefHeight="38.0" prefWidth="588.0" promptText="Lease Start Date" />
                               <DatePicker fx:id="leaseEndDatePicker" prefHeight="38.0" prefWidth="585.0" promptText="Lease End Date" />
-                              <ComboBox prefHeight="45.0" prefWidth="592.0" promptText="Please Select Occupancy" />
+                              <ComboBox fx:id="tenantComboBox" prefHeight="45.0" prefWidth="592.0" promptText="Please Select Tenant ID" />
+                              <ComboBox fx:id="occupanciesComboBox" prefHeight="45.0" prefWidth="592.0" promptText="Please Select Occupancy" />
                               <Button mnemonicParsing="false" onMouseClicked="#handleNewLeaseSave" prefHeight="49.0" prefWidth="585.0" style="-fx-background-color: #393E46;" text="REGISTER LEASE" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
@@ -37,14 +38,22 @@
           </Tab>
           <Tab text="All Lease">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="allLeaseTableView" layoutX="43.0" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="tenantIdColumn" prefWidth="95.0" text="Tenant ID" />
+                            <TableColumn fx:id="tenantNameColumn" prefWidth="98.0" text="Tenant Name" />
+                              <TableColumn fx:id="leaseStartingTableColumn" prefWidth="118.0" text="Lease Start Date" />
+                              <TableColumn fx:id="leaseEndTableColumn" prefWidth="118.0" text="Lease End Date" />
+                              <TableColumn fx:id="occupancyIdColumn" prefWidth="118.0" text="Occupancy ID" />
+                              <TableColumn fx:id="occupancyAddressColumn" prefWidth="158.0" text="Address" />
+                              <TableColumn fx:id="deleteColumn" prefWidth="158.0" text="Delete Lease" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
             </content>
           </Tab>
-            <Tab text="Expired Lease">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
         </tabs>
       </TabPane>
    </children>
