@@ -1,11 +1,13 @@
 package Model;
 
 import DataAccess.Service;
+import Interface.Constants;
 import Interface.ConstantsService;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class Lease implements Serializable {
     Occupancy occupancy;
@@ -18,6 +20,22 @@ public class Lease implements Serializable {
         this.tenant = tenant;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public Occupancy getOccupancy() {
+        return occupancy;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
     }
 
     public boolean checkLeaseValidity() {
@@ -56,6 +74,23 @@ public class Lease implements Serializable {
         return leaseService.findAllRecordsFromFile();
     }
 
+    public boolean deleteLease()  {
+        ArrayList<Lease> allLease  = getAllLease(Constants.LeasePath);
+        if (allLease.contains(this)) {
+            Service<Lease> leaseService = new Service<Lease>(Constants.LeasePath);
+            Service<Occupancy> occupancyService = new Service<>(Constants.OccupancyPath);
+            try {
+                Occupancy updateOccupancy = this.occupancy.deepClone();
+                updateOccupancy.setIsOccupancyAvailable(true);
+                occupancyService.updateRecord(this.occupancy, updateOccupancy);
+                return leaseService.deleteRecord(this);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Lease" +
@@ -63,5 +98,18 @@ public class Lease implements Serializable {
                 " Tenant: " + tenant + "\n" +
                 " StartDate: " + startDate + "\n" +
                 " EndDate=" + endDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Lease)) return false;
+        Lease lease = (Lease) o;
+        return getOccupancy().equals(lease.getOccupancy()) && getTenant().equals(lease.getTenant()) && getStartDate().equals(lease.getStartDate()) && getEndDate().equals(lease.getEndDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getOccupancy(), getTenant(), getStartDate(), getEndDate());
     }
 }
