@@ -14,7 +14,10 @@ import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
+// Controller Class that loads different components of javafx and their logic
 public class HomeController {
+
+    // loading ImageView, HBox, AnchorPane
     @FXML
     ImageView homeImageView;
 
@@ -42,6 +45,7 @@ public class HomeController {
     @FXML
     AnchorPane viewerPane;
 
+    // controller associated for setting the GUI color
     private void resetSelectedColors(HBox selectedOptions) {
 
         ArrayList<HBox> menuOptions = new ArrayList<>();
@@ -118,6 +122,7 @@ public class HomeController {
 
     public void loadImageView() {
         try {
+            // loading the resources for the application
             File file = null;
             file = new File("");
             String filePath = file.getAbsoluteFile().toString();

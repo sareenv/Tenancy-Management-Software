@@ -19,6 +19,8 @@ import javafx.scene.control.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Property Controller Class for managing the various properties and display them on the basis of filter as vacant
+// or waitlisted
 public class PropertyController {
 
     @FXML TextField streetNumberTextField;
@@ -59,8 +61,10 @@ public class PropertyController {
     // Controller Methods to link to the Models.
     private Administrator administrator = Administrator.makeSharedInstance();
 
+    // initialzing the table and various text-labels
     public void initialize() throws InterruptedException {
 
+        // Running the business logic on different thread and displaying them
         ThreadRun thread = new ThreadRun("display");
         thread.start();
         thread.join();

@@ -16,7 +16,10 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
+// LeaseController class, used for managing the leases, display leases and creation of leases
 public class LeaseController {
+
+    // Loading the required the java-fx components associated with Lease.xml
 
     @FXML DatePicker leaseStartDatePicker;
     @FXML DatePicker leaseEndDatePicker;
@@ -46,6 +49,7 @@ public class LeaseController {
         prefetchAllTenants();
     }
 
+    // setting the all-leases into the table and display them
     public void loadAllLeaseTableViewData() {
         getAllLease();
         ObservableList<Lease> data = FXCollections.observableArrayList(getAllLease());

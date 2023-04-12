@@ -4,12 +4,16 @@ import Tests.Objects.IdentityObject;
 
 import java.util.Scanner;
 
+// driver class for SET application
 public class Driver {
 
+    // Scanner to take input from user
     static Scanner sc = new Scanner(System.in);
 
+    // Creation of generic Set
     static Set<SetStructure> set = new Set<>();
 
+    // to take Id as input from user while doing addition in set
     public static int getId(){
         System.out.print("Please enter element id:- ");
         int id = sc.nextInt();
@@ -17,6 +21,8 @@ public class Driver {
 
         return id;
     }
+
+    // adds the element into set
     public static void addElement(){
         int id = getId();
 
@@ -26,12 +32,14 @@ public class Driver {
             element = sc.nextLine();
         }
 
+        // Creating SetStructure Object to hold as element into Stack
         SetStructure setStructure = new SetStructure(id,element);
         set.addElement(setStructure);
 
         System.out.println("Element Added Successfully!");
     }
 
+    // Remove element from stack
     public static void removeElement(){
 
         int id = getId();
@@ -43,10 +51,12 @@ public class Driver {
 
     }
 
+    // display all elements in stack
     public static void displayAllElements(){
         set.displayElements();
     }
 
+    // to get an element from stack
     public static void getPeek(){
         int id = getId();
         Boolean val = set.peek(id);
@@ -58,6 +68,7 @@ public class Driver {
         }
     }
 
+    // to get the size of stack
     public static void getSize(){
         System.out.println(set.size());
     }
@@ -68,6 +79,7 @@ public class Driver {
 
 
 
+    //Driver program to handle console input
     public static void main(String args[]){
 
         int choice = 0;

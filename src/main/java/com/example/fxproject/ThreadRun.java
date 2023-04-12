@@ -6,6 +6,7 @@ import Model.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+// Thread Run class that implements the Core Thread class from JAVA
 public class ThreadRun extends Thread{
 
     private String operation = "";
@@ -36,6 +37,8 @@ public class ThreadRun extends Thread{
     String name,occupation;
     Double income;
     boolean result;
+
+    // uses the different business logic on the basis of creation of thread object, which is defined by 'operation' type.
     @Override
     public void run(){
 
@@ -58,12 +61,14 @@ public class ThreadRun extends Thread{
         }
     }
 
+    // initialzing the variables required for the operation for adding tenant
     public void createTenant(String name, String occupation, Double income){
         this.name = name;
         this.occupation = occupation;
         this.income = income;
     }
 
+    // intialzing the variables reqiured for the operation for creating leases
     public void createLease(Occupancy occupancy, Tenant tenant, Date startDate, Date endDate){
         this.selectedOccupancy = occupancy;
         this.tenant = tenant;
@@ -71,10 +76,12 @@ public class ThreadRun extends Thread{
         this.endDate = endDate;
     }
 
+    // intialzing the variables reqiured for the operation for creating home
     public void homeOccupancy(Address address){
         this.address = address;
     }
 
+    // intialzing the variables reqiured for the operation for creating condo
     public void condoOccupancy(Address address, int bedroom, int bathroom, double squareFoot, int unitNumber){
         this.address = address;
         this.bedroom = bedroom;
@@ -83,6 +90,7 @@ public class ThreadRun extends Thread{
         this.unitNumber = unitNumber;
     }
 
+    // intialzing the variables reqiured for the operation for creating apartment
     public void apartmentOccupancy(Address address, int bedroom, int bathroom, double squareFoot, int apartmentNumber){
         this.address = address;
         this.bedroom = bedroom;

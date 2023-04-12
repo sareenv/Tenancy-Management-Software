@@ -99,6 +99,8 @@ public class TenantController {
     }
 
     public Boolean addTenant(String name, String occupation, Double monthlyIncome) throws InterruptedException {
+
+        // Creating a different thread, that adds the tenants and runs the business logic on seprate thread
         ThreadRun thread = new ThreadRun("createTenant");
         thread.createTenant(name,occupation,monthlyIncome);
         thread.start();
